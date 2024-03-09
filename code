@@ -1,0 +1,175 @@
+import discord
+from discord.ext import commands
+import random
+
+# Değişkenler
+cevaplarakranzorbaligi = "Akran zorbalığı hakkında"
+cevaplarcevrekirliligi = "Çevre kirliliği hakkında"
+cevaplarmutsuzinsanlar = "Mutsuz insanlar hakkında"
+
+# Örnek cevaplar
+cevaplar_akranzorbaligi = [
+ "Zorbalığa uğrayan çocuklar, genellikle bu deneyimleri ile başa çıkma konusunda zorlanabilirler."
+    "Akran zorbalığına karşı mücadelede, toplumsal farkındalık artırma önemli bir adımdır."
+    "Zorbalığın önlenmesi için okullarda etkili anti-zorbalık politikaları uygulanmalıdır."
+    "Akran zorbalığı, uzun vadeli psikolojik etkilere neden olabilir."
+    "Zorbalık, genellikle güç ilişkileri üzerine kuruludur ve kontrol arayışı içerir."
+    "Akran zorbalığına tanık olan diğer öğrenciler de psikolojik olarak etkilenebilir."
+    "Zorbalığın önlenmesi için eğitimciler, öğrencilere duyarlılık ve empati konusunda eğitim vermelidir."
+    "Akran zorbalığı, mağdur olan öğrencinin sosyal izolasyona sürüklenmesine neden olabilir."
+    "Zorbalık, cinsiyet, ırk, din veya diğer özelliklere dayalı olabilir."
+    "Akran zorbalığına karşı güçlü bir toplumsal tepki oluşturmak önemlidir."
+    "Zorbalıkla mücadelede, öğrencilere kendilerini ifade etme becerileri kazandırılmalıdır."
+    "Akran zorbalığı, çocukların okula olan motivasyonunu azaltabilir."
+    "Zorbalık, internet üzerinden yapılan siber zorbalık şeklinde de ortaya çıkabilir."
+    "Zorbalık, bireyin özsaygısını ve özgüvenini olumsuz etkileyebilir."
+    "Akran zorbalığı, toplumda eşitsizlik ve ayrımcılıkla bağlantılı olabilir."
+    "Zorbalığa karşı etkili bir mücadele için öğretmenler, veliler ve öğrenciler işbirliği yapmalıdır."
+    "Akran zorbalığı, güçsüz olanı hedef alarak kontrol ve egemenlik arayışının bir yansıması olabilir."
+    "Zorbalık, çocukların sosyal ilişkilerini olumsuz etkileyebilir."
+    "Zorbalığa uğrayan öğrencilere destek sağlamak, onların duygusal iyilik hallerini artırabilir."
+    "Akran zorbalığına karşı tolerans göstermek, toplumda olumsuz bir normu pekiştirebilir."
+    "Zorbalık, öğrenciler arasında duygusal yaralanmalara yol açabilir."
+    "Zorbalığa uğrayan öğrenciler, okula gitmekten kaçınabilirler."
+    "Akran zorbalığına karşı eğitimciler, öğrencilere dayanıklılık ve problemleri çözme becerileri kazandırmalıdır."
+    "Zorbalık, genellikle güçsüz olanın maruz kaldığı bir saldırı biçimi olarak görülür."
+    "Zorbalık, çocuklarda anksiyete ve depresyon gibi mental sağlık sorunlarına neden olabilir."
+    "Akran zorbalığı, sosyal normlara uymayan davranışlar sergileyen bireyleri hedef alabilir."
+    "Zorbalığa karşı mücadelede, öğrencilere etkili iletişim becerileri öğretilmelidir."
+    "Zorbalık, çocukların akademik başarılarını etkileyebilir."
+    "Akran zorbalığına karşı önleyici programlar, öğrencilere olumlu davranışları teşvik edebilir."
+    "Zorbalığın nedenleri arasında aile içi problemler de yer alabilir."
+    "Zorbalık, toplumda hoşgörüsüzlük kültürünü besleyebilir."
+    "Akran zorbalığına maruz kalan öğrenciler, okuldan soğuyabilirler"
+    "Zorbalığın önlenmesinde, eğitimciler ve veliler işbirliği yapmalıdır."
+    "Zorbalık, çocukların günlük yaşamını olumsuz etkileyebilir."
+    "Akran zorbalığı, çocuklarda sosyal izolasyon ve yalnızlık duygularına neden olabilir."
+    "Zorbalık, toplumun genelinde hoşgörüsüzlük ve ayrımcılığı besleyebilir."
+    "Zorbalığa karşı toplumsal bir direniş oluşturmak, olumlu bir değişiklik sağlayabilir."
+    "Akran zorbalığına maruz kalan öğrencilerin akademik performansları düşebilir."
+    "Zorbalık, mağdur olanın duygusal iyilik halini etkileyebilir."
+    "Zorbalık, çocukların duygusal ve sosyal gelişimini olumsuz etkileyebilir."
+]
+
+cevaplar_cevrekirliligi = [
+ "Çevre kirliliği doğamıza ciddi zararlar verebilir.",
+    "Sürdürülebilir çevre politikaları benimsemek önemlidir.",
+    "Geridönüşüm ve enerji tasarrufu çevre kirliliği ile mücadelede etkilidir."
+    "Çevre kirliliği, doğal kaynakların kirletilmesi anlamına gelir."
+"Hava kirliliği, çevre kirliliğinin önemli bir parçasını oluşturur."
+"Su kirliliği, nehirler, göller ve denizlerin zarar görmesine neden olan bir sorundur."
+"Toprağın kimyasal kirleticilerle kontamine olması, toprak kirliliğine yol açar."
+"Plastik atıklar, çevre kirliliğinin önemli bir bileşenidir."
+"Endüstriyel faaliyetler, çevre kirliliğine büyük katkıda bulunabilir."
+"Nükleer enerji üretimi, radyoaktif atıklar nedeniyle çevre kirliliğine yol açabilir."
+"Ormanların yok edilmesi, çevre kirliliğine ve habitat kaybına neden olabilir."
+"Tarım ilaçları, su kaynaklarını ve toprağı kirletebilir."
+"Gürültü kirliliği, şehirlerde yaygın bir sorundur ve sağlık sorunlarına neden olabilir."
+"Çevre kirliliği, ekosistemleri ve biyoçeşitliliği tehdit edebilir."
+"Çevre kirliliğinin azaltılması için geri dönüşüm teşvik edilmelidir."
+"Sanayi atıkları, su kaynaklarını kirletebilir ve balık ölümlerine neden olabilir."
+"İnsan faaliyetleri, ozon tabakasını incelten kimyasalların salınmasına neden olabilir."
+"Fosil yakıt kullanımı, hava kirliliğini artırabilir ve iklim değişikliğine katkıda bulunabilir."
+"Çevre kirliliği, sucul ekosistemlerde balıkların ve diğer canlıların yaşamını tehdit edebilir."
+"Plastik şişe ve poşetler, okyanuslarda büyük çöp yığınlarına neden olabilir."
+"Sanayi tesislerinin emisyonları, hava kalitesini düşürebilir ve solunum problemlerine yol açabilir."
+"Tarım alanlarında kullanılan kimyasal gübreler, toprak ve su kaynaklarını kirletebilir."
+"Radyoaktif atıkların düzensiz depolanması, uzun vadeli çevresel sorunlara neden olabilir."
+"Doğal afetler, çevre kirliliğini artırabilir ve temizlik çalışmalarını zorlaştırabilir."
+"Çevre kirliliği, su kaynaklarından insan tüketimine zarar verebilir."
+"Organik atıkların doğru bir şekilde işlenmemesi, toprak kirliliğine neden olabilir."
+"Hava kirliliği, astım ve solunum yolu hastalıklarını tetikleyebilir."
+"Karbon ayak izi, bireylerin ve şirketlerin çevre üzerindeki etkisini ölçer."
+"Küresel ısınma, çevre kirliliğinin bir sonucu olarak iklim değişikliğine yol açabilir."
+"Çevre kirliliğinin azaltılması için sürdürülebilir enerji kaynakları teşvik edilmelidir."
+"Endüstriyel kazalar, çevre kirliliğine ani ve ciddi zarar verebilir."
+"Çevre kirliliği, su kaynaklarındaki balık popülasyonlarını azaltabilir."
+"Tarım ilaçları, sucul ekosistemlerde doğal yaşamı tehlikeye atabilir."
+"Fosil yakıtların yanması, atmosferde sera gazlarının birikimine neden olabilir."
+"Çevre kirliliği, doğal yaşam alanlarının kaybına neden olarak ekosistemleri bozabilir."
+"Biyoçeşitliliğin azalması, çevre kirliliğinin bir sonucu olabilir."
+"Atık su arıtma tesislerinin yetersiz çalışması, su kirliliğini artırabilir."
+"Şehirlerdeki ışık kirliliği, gökyüzündeki yıldızları görmeyi zorlaştırabilir."
+"Hava kirliliği, solunum yolu enfeksiyonlarını artırabilir."
+"Elektronik atıkların doğru bir şekilde bertaraf edilmemesi, toprak ve su kirliliğine yol açabilir."
+"Çevre kirliliği, göçmen kuşların göç rotalarını etkileyebilir."
+"Çevre kirliliği, deniz canlılarına zarar verebilir ve ekosistemleri değiştirebilir."
+"Kirli su kaynakları, insan sağlığını tehdit edebilir ve su kaynaklarına erişimi kısıtlayabilir."
+"Doğal yaşam alanlarının tahribatı, birçok türün nesli tükenme tehlikesi ile karşı karşıya kalmasına neden olabilir."
+"Çevre kirliliği, tarım ürünlerinin kalitesini düşürebilir ve gıda güvenliğini tehdit edebilir."
+"Çevre kirliliği, temiz içme suyu kaynaklarını azaltabilir ve su krizlerine neden olabilir."
+"Tarım ilaçları ve kimyasallar, toprak verimliliğini azaltabilir ve ekosistemleri bozabilir."
+"Kirli hava ve su kaynakları, çeşitli hastalıkların yayılmasına katkıda bulunabilir."
+"Plastik atıkların okyanuslara ulaşması, deniz canlıları için tehlikeli olabilir."
+"Çevre kirliliği, şehirlerde yaşayan insanların sağlığını olumsuz etkileyebilir."   
+]
+
+cevaplar_mutsuzinsanlar = [
+"Mutsuzluk, genellikle çeşitli faktörlerin bir kombinasyonundan kaynaklanır."
+"Mutsuz insanlar, duygusal zorluklarla başa çıkarken destek arayışındadır."
+"İyi bir destek sistemine sahip olmak, mutsuzluğun üstesinden gelmeye yardımcı olabilir."
+"Mutsuzluk, biyolojik, psikolojik ve çevresel etkenlerin bir etkileşimi olarak görülebilir."
+"Sosyal izolasyon, mutsuzluğun yaygın bir tetikleyicisi olabilir."
+"Düşük özsaygı, mutsuzluğun temel nedenlerinden biri olabilir."
+"Mutsuz insanlar genellikle anlam arayışındadır, içsel bir boşluk hissiyle mücadele ederler."
+"Motivasyon eksikliği, mutsuz insanların günlük yaşamında sıkça karşılaştığı bir zorluktur."
+"Mutsuzluk, genetik faktörlerden etkilenebilir ve aile geçmişi rol oynayabilir."
+"Olumsuz düşünce alışkanlıkları, mutsuzluğu derinleştirebilir."
+"Mutsuz insanlar, genellikle gelecekle ilgili belirsizliklerle başa çıkarken zorlanırlar."
+"Stresin uzun süre devam etmesi, mutsuzluğu artırabilir."
+"İyi bir uyku almak, ruh halini iyileştirerek mutsuzluğu azaltabilir."
+"Mutsuzluk, depresyon ve anksiyete gibi mental sağlık sorunları ile sık sık ilişkilidir."
+"Mutsuz insanlar genellikle içsel bir anlam arayışı içindedirler."
+"Pozitif sosyal etkileşimler, mutsuzluğun hafifletilmesine katkıda bulunabilir."
+"Meditasyon ve yoga, mutsuzluğu azaltmak için etkili teknikler olabilir."
+"Mutsuz insanlar, genellikle duygusal dürtü kontrolü konusunda zorlanırlar."
+"Düşük serotonin seviyeleri, mutsuzluğun bir nedeni olabilir."
+"Kişisel gelişim ve hedeflere yönelme, mutsuzluğun üstesinden gelmede yardımcı olabilir."
+"Hobiler ve ilgi alanları, mutsuzluğu azaltmada olumlu bir etki yapabilir."
+"Mutsuzluk, genellikle negatif yaşam olaylarına tepki olarak ortaya çıkabilir."
+"Mutsuz insanlar, genellikle kendilerini anlamsız veya amaçsız hissederler."
+"Olumlu sosyal ilişkiler, mutsuzluğun etkilerini hafifletebilir."
+"Mutsuzluk, geçmiş travmaların etkisi altında olabilir ve terapi yardımcı olabilir."
+"Sağlıklı beslenme alışkanlıkları, mutsuzluğu azaltabilir ve enerji seviyelerini artırabilir."
+"Empati, mutsuz insanlar arasında destek sağlamak için önemlidir."
+"İnsanlar arası ilişkilerde kalite, mutsuzluğun azaltılmasına yardımcı olabilir."
+"Olumlu düşünce alışkanlıkları, mutsuzluğun üstesinden gelmeye yardımcı olabilir."
+"Mutsuz insanlar genellikle içsel bir sessizlik hissi ile mücadele ederler."
+"Düzenli egzersiz, endorfin salgılayarak mutluluk hissini artırabilir."
+"Duygusal ifade, mutsuzluğun bir türü olan içsel  
+]
+
+# Bot oluşturma
+bot = commands.Bot(command_prefix='!')
+
+@bot.command(name='AkranZorbaligi', help='Akran zorbalığı hakkında cevaplar almak için')
+async def akran_zorbaligi(ctx):
+    await ctx.send(cevaplarakranzorbaligi)
+    await ctx.send("Başlamak istiyorsanız 'Evet' yazın.")
+
+@bot.command(name='CevreKirliligi', help='Çevre kirliliği hakkında cevaplar almak için')
+async def cevre_kirliligi(ctx):
+    await ctx.send(cevaplarcevrekirliligi)
+    await ctx.send("Başlamak istiyorsanız 'Evet' yazın.")
+
+@bot.command(name='MutsuzInsanlar', help='Mutsuz insanlar hakkında cevaplar almak için')
+async def mutsuz_insanlar(ctx):
+    await ctx.send(cevaplarmutsuzinsanlar)
+    await ctx.send("Başlamak istiyorsanız 'Evet' yazın.")
+
+@bot.event
+async def on_message(message):
+    if message.author == bot.user:
+        return
+
+    if message.content.lower() == 'evet' and message.channel.type == discord.ChannelType.private:
+        if cevaplarakranzorbaligi.lower() in message.content.lower():
+            await message.author.send(random.choice(cevaplar_akranzorbaligi))
+        elif cevaplarcevrekirliligi.lower() in message.content.lower():
+            await message.author.send(random.choice(cevaplar_cevrekirliligi))
+        elif cevaplarmutsuzinsanlar.lower() in message.content.lower():
+            await message.author.send(random.choice(cevaplar_mutsuzinsanlar))
+
+    await bot.process_commands(message)
+
+bot.run('') 
